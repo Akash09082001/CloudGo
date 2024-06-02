@@ -1,7 +1,7 @@
 import React from 'react'
 import Logo from '../atoms/Logo'
 import { ThemeSwitcherBtn } from '../atoms/ThemeSwitcherBtn'
-import { OrganizationSwitcher, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 
@@ -14,7 +14,6 @@ const Navbar = () => {
                     <Logo />
                 </div>
                 <div className="flex gap-5 w-fit">
-                    <OrganizationSwitcher />
                     <SignedIn>
                         <UserButton />
                     </SignedIn>
