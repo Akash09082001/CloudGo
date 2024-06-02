@@ -72,7 +72,7 @@ export function UploadFile() {
                     <DialogHeader>
                         <DialogTitle>Upload File</DialogTitle>
                         <DialogDescription>
-                            Upload a new file here. Click save when you're done.
+                            Upload a new file here. Click save when you are done.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
