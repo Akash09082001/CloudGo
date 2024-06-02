@@ -63,7 +63,7 @@ const Page = () => {
                                             <EllipsisVertical className='size-4' />
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
+                                    <DropdownMenuContent align="end">
                                         <DropdownMenuItem className="flex w-full justify-between" >
                                             <DownloadBtn fileId={file._id} />
                                         </DropdownMenuItem>
