@@ -10,21 +10,23 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { InputWithLabel } from "./InputWithLabel";
-import { useState } from "react";
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 import { useUser } from '@clerk/clerk-react';
+import { useMutation } from "convex/react";
+import { useState } from "react";
+import { api } from "../../../convex/_generated/api";
+import { InputWithLabel } from "./InputWithLabel";
 
 export function UploadFile() {
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const createFile = useMutation(api.files.createFile);
     const generateUploadUrl = useMutation(api.files.generateUploadUrl);
     const { user } = useUser();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setUploading(true)
         if (!file) {
             console.error("No file selected");
             return;
@@ -60,6 +62,7 @@ export function UploadFile() {
         setTitle('');
         setFile(null);
         setIsOpen(false);
+        setUploading(false)
     };
 
     return (
@@ -93,7 +96,7 @@ export function UploadFile() {
                         />
                     </div>
                     <DialogFooter>
-                        <Button className="w-full" type="submit">Upload File</Button>
+                        <Button className="w-full" type="submit" disabeled={uploading}>{uploading? "Uploading": "Upload File"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

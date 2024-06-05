@@ -59,7 +59,6 @@ export const deleteFileById = mutation({
         }
 
         await ctx.db.delete(file._id)
-
     },
 });
 

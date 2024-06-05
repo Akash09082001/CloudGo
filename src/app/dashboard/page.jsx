@@ -1,16 +1,16 @@
 "use client"
 
-import React from 'react';
-import { useUser } from '@clerk/clerk-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { EllipsisVertical, File, Folder, ImageIcon, Star, Trash } from 'lucide-react';
-import Image from 'next/image';
-import { api } from '../../../convex/_generated/api';
-import { useQuery } from 'convex/react';
-import { Button } from '@/components/ui/button';
 import DeleteBtn from '@/components/atoms/DeleteBtn';
 import DownloadBtn from '@/components/atoms/DownloadBtn';
+import PreviewBtn from '@/components/atoms/PreviewBtn';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useUser } from '@clerk/clerk-react';
+import { useQuery } from 'convex/react';
+import { EllipsisVertical, File, Folder, ImageIcon, Star } from 'lucide-react';
+import Image from 'next/image';
+import { api } from '../../../convex/_generated/api';
 
 const Page = () => {
     const { user } = useUser();
@@ -65,6 +65,9 @@ const Page = () => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem className="flex w-full justify-between" >
+                                            <PreviewBtn fileId={file._id} />
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem className="flex w-full justify-between" >
                                             <DownloadBtn fileId={file._id} />
                                         </DropdownMenuItem>
                                         <DropdownMenuItem className="flex w-full justify-between">
@@ -80,18 +83,6 @@ const Page = () => {
                     </CardHeader>
                     <CardContent className="flex flex-col w-full">
                         <div className="flex relative w-full h-20 items-center justify-center">
-                            {/* {file.url && (
-                                <Image
-                                    src={file.url || "/Images/card-320-300.webp"}
-                                    alt={file.title}
-                                    layout="responsive"
-                                    objectFit='contain'
-                                    objectPosition='center'
-                                    width={960}
-                                    height={340}
-                                    loading='lazy'
-                                />
-                            )} */}
                             {fileIcon(file, 'h-20 w-20')}
                         </div>
                     </CardContent>
