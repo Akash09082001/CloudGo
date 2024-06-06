@@ -13,6 +13,7 @@ import {
 import { useUser } from '@clerk/clerk-react';
 import { useMutation } from "convex/react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { api } from "../../../convex/_generated/api";
 import { InputWithLabel } from "./InputWithLabel";
 
@@ -29,11 +30,16 @@ export function UploadFile() {
         setUploading(true)
         if (!file) {
             console.error("No file selected");
+            toast.warning("No file selected")
             return;
         }
 
         if (file.size > 5 * 1024 * 1024) {
-            console.error("File size exceeds 5 MB");
+            toast.error("File size exceeds 5 MB")
+            setTitle('');
+            setFile(null);
+            setIsOpen(false);
+            setUploading(false);
             return;
         }
 
@@ -58,11 +64,12 @@ export function UploadFile() {
             userId: user.id,
             type: types[file.type]
         });
-
         setTitle('');
         setFile(null);
         setIsOpen(false);
-        setUploading(false)
+        setUploading(false);
+        toast.success("File Uploaded Successfully")
+
     };
 
     return (
@@ -96,7 +103,7 @@ export function UploadFile() {
                         />
                     </div>
                     <DialogFooter>
-                        <Button className="w-full" type="submit" disabeled={uploading}>{uploading? "Uploading": "Upload File"}</Button>
+                        <Button className="w-full" type="submit" disabeled={uploading}>{uploading ? "Uploading.." : "Upload File"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

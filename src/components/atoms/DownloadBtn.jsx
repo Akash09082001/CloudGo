@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import { Download } from 'lucide-react';
 import { useMutation } from 'convex/react';
+import { Download } from 'lucide-react';
+import { toast } from 'sonner';
 import { api } from '../../../convex/_generated/api';
+import { Button } from '../ui/button';
 
 const DownloadBtn = ({ fileId }) => {
     const downloadFile = useMutation(api.files.getFileById);
@@ -12,7 +12,7 @@ const DownloadBtn = ({ fileId }) => {
             const response = await downloadFile({ fileId });
 
             if (!response || !response.url) {
-                console.log("Unable to download file");
+                toast.warning("Unable to download file");
                 return;
             }
 
@@ -36,9 +36,11 @@ const DownloadBtn = ({ fileId }) => {
             link.click();
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
+            toast.success("File is Downloaded");
 
         } catch (error) {
             console.error("Error downloading the file:", error);
+            toast.error("Error while downloading the file:", error)
         }
     };
 
