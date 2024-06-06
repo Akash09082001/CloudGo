@@ -20,7 +20,6 @@ export const createFile = mutation({
     }
 });
 
-
 export const generateUploadUrl = mutation(async (ctx) => {
     return await ctx.storage.generateUploadUrl();
 });
@@ -45,7 +44,6 @@ export const getFiles = query({
         );
     }
 });
-
 
 export const deleteFileById = mutation({
     args: {

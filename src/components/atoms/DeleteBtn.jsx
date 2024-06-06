@@ -1,9 +1,7 @@
-import React from 'react';
-import { Button } from '../ui/button'; // Ensure this path is correct
-import { Trash } from 'lucide-react';
 import { useMutation } from 'convex/react';
+import { Trash } from 'lucide-react';
 import { api } from '../../../convex/_generated/api';
-import { deleteFileById } from '../../../convex/files';
+import { Button } from '../ui/button';
 
 const DeleteBtn = ({ fileId }) => {
 

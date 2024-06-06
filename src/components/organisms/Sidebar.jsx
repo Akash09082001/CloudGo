@@ -1,10 +1,9 @@
 "use client"
 
 import useMediaQuery from '@/hooks/useMediaQuery'
-import React from 'react'
-import { Button } from '../ui/button'
-import Link from 'next/link'
 import { Folder, Star, Trash } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '../ui/button'
 
 const Sidebar = () => {
 
@@ -38,7 +37,7 @@ const Sidebar = () => {
                     {
                         navList.map((nav) => (
                             <li key={nav.id} className='flex w-full rounded-md'>
-                                <Button variant="ghost" className="w-full">
+                                <Button asChild variant="ghost" className="w-full">
                                     <Link href={nav.link} className='flex w-full items-center gap-3'>
                                         <span>{nav.icon}</span>
                                         <span>{nav.name}</span>
@@ -58,7 +57,7 @@ const Sidebar = () => {
                 {
                     navList.map((nav) => (
                         <li key={nav.id} className='flex w-fit rounded-md'>
-                            <Button variant="ghost" className="w-fit">
+                            <Button asChild variant="ghost" className="w-fit">
                                 <Link href={nav.link} className='flex w-fit items-center gap-3'>
                                     <span>{nav.icon}</span>
                                 </Link>
