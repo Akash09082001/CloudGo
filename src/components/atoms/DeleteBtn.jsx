@@ -1,5 +1,6 @@
 import { useMutation } from 'convex/react';
 import { Trash } from 'lucide-react';
+import { toast } from 'sonner';
 import { api } from '../../../convex/_generated/api';
 import { Button } from '../ui/button';
 
@@ -9,6 +10,7 @@ const DeleteBtn = ({ fileId }) => {
 
     const handleDelete = async () => {
         await deleteFile({ fileId })
+        toast.success("File is Deleted")
     }
 
     return (

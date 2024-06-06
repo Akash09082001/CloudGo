@@ -37,8 +37,8 @@ const Sidebar = () => {
                     {
                         navList.map((nav) => (
                             <li key={nav.id} className='flex w-full rounded-md'>
-                                <Button asChild variant="ghost" className="w-full">
-                                    <Link href={nav.link} className='flex w-full items-center gap-3'>
+                                <Button asChild variant="ghost" className="w-full items-start justify-start">
+                                    <Link href={nav.link} className='gap-3'>
                                         <span>{nav.icon}</span>
                                         <span>{nav.name}</span>
                                     </Link>
