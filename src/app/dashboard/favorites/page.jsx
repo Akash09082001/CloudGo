@@ -1,11 +1,11 @@
+
 import FileBrowser from '@/components/organisms/FileBrowser'
 
 const page = () => {
+
     return (
         <>
-
-            <FileBrowser title={"Favorites"} />
-
+            <FileBrowser title={"Favorites"} favorites />
         </>
     )
 }

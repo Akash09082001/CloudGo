@@ -10,17 +10,18 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useUser } from '@clerk/nextjs'
 import { useQuery } from 'convex/react'
-import { EllipsisVertical, File, Folder, ImageIcon, Star } from 'lucide-react'
+import { EllipsisVertical, File, Folder, ImageIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { api } from '../../../convex/_generated/api'
+import FavoriteBtn from '../atoms/FavoriteBtn'
 
-const FileBrowser = ({ title }) => {
+const FileBrowser = ({ title, favorites }) => {
 
     const { user } = useUser();
     const [query, setQuery] = useState("");
 
-    const files = useQuery(api.files.getFiles, { userId: user?.id, query });
+    const files = useQuery(api.files.getFiles, { userId: user?.id, query, favorites });
 
 
     const fileIcon = (file, className) => {
@@ -98,7 +99,7 @@ const FileBrowser = ({ title }) => {
                                                             <DownloadBtn fileId={file._id} />
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="flex w-full justify-between">
-                                                            Favorite &nbsp; <Star className='size-4' />
+                                                            <FavoriteBtn fileId={file._id} userId={file.userId} />
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="flex w-full justify-between">
                                                             <DeleteBtn fileId={file._id} />
