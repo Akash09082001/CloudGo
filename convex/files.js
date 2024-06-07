@@ -26,12 +26,18 @@ export const generateUploadUrl = mutation(async (ctx) => {
 
 export const getFiles = query({
     args: {
-        userId: v.string()
+        userId: v.string(),
+        query: v.optional(v.string())
     },
     handler: async (ctx, args) => {
         const files = await ctx.db.query("files")
             .filter((q) => q.eq(q.field("userId"), args.userId))
             .collect();
+
+        if (args.query) {
+            const res = files.filter((file) => file.title.toLowerCase().includes(args.query));
+            return res
+        }
 
         return Promise.all(
             files.map(async (file) => {
@@ -39,6 +45,7 @@ export const getFiles = query({
                 return {
                     ...file,
                     url,
+
                 };
             })
         );

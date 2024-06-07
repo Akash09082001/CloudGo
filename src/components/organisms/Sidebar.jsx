@@ -11,7 +11,7 @@ const Sidebar = () => {
         {
             id: "1",
             icon: <Folder className='size-5' />,
-            link: "/dashboard",
+            link: "/dashboard/files",
             name: "All Files"
         },
         {
