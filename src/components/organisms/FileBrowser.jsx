@@ -10,7 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useUser } from '@clerk/nextjs'
 import { useQuery } from 'convex/react'
-import { EllipsisVertical, Folder, ImageIcon, Star } from 'lucide-react'
+import { EllipsisVertical, File, Folder, ImageIcon, Star } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { api } from '../../../convex/_generated/api'
