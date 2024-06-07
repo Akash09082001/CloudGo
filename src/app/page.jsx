@@ -16,12 +16,11 @@ export default function Home() {
                         Manage AWS, Google Cloud, and Azure with ease. Go Cloud App offers integration, real-time analytics, and cost optimization. Simplify your cloud operations.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <Link href="/dashboard" passHref>
+                        <Link href="/dashboard/files">
                             <Button className="rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                 Get started
                             </Button>
                         </Link>
-
                     </div>
                 </div>
             </div>
