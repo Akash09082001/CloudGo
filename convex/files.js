@@ -27,16 +27,29 @@ export const generateUploadUrl = mutation(async (ctx) => {
 export const getFiles = query({
     args: {
         userId: v.string(),
-        query: v.optional(v.string())
+        query: v.optional(v.string()),
+        favorites: v.optional(v.boolean())
     },
     handler: async (ctx, args) => {
-        const files = await ctx.db.query("files")
+        let files = await ctx.db.query("files")
             .filter((q) => q.eq(q.field("userId"), args.userId))
             .collect();
 
         if (args.query) {
             const res = files.filter((file) => file.title.toLowerCase().includes(args.query));
             return res
+        }
+
+        if (args.favorites) {
+
+            const favorites = await ctx.db
+                .query("favorites")
+                .filter((q) => q.eq(q.field("userId"), args.userId))
+                .collect()
+
+            console.log("favorite list", favorites);
+
+            return files.filter((file) => favorites.some((favorite) => favorite.fileId === file.fileId))
         }
 
         return Promise.all(
@@ -83,5 +96,50 @@ export const getFileById = mutation({
         }
     }
 });
+
+export const toggleFavorite = mutation({
+    args: {
+        userId: v.string(),
+        fileId: v.id("files"),
+    },
+    handler: async (ctx, args) => {
+        const file = await ctx.db.get(args.fileId)
+
+        if (!file) console.log("file not found");
+
+        const favorite = await ctx.db
+            .query("favorites")
+            .filter((q) => q.eq(q.field("fileId"), file.fileId))
+            .first()
+
+        if (!favorite) {
+            await ctx.db.insert("favorites", {
+                fileId: file.fileId,
+                userId: file.userId,
+            })
+            return {
+                success: true,
+                message: "Added to favorites",
+                isFavorite: true
+            };
+        }
+        else {
+            const favoriteFile = await ctx.db
+                .query("favorites")
+                .filter((q) => q.eq(q.field("fileId"), file.fileId))
+                .collect()
+
+            await ctx.db.delete(favoriteFile[0]._id)
+            return {
+                success: true,
+                message: "Removed from favorites",
+                isFavorite: false
+            };
+        }
+    }
+});
+
+
+
 
 
