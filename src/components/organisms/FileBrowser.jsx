@@ -1,24 +1,26 @@
 "use client"
 
-import DeleteBtn from '@/components/atoms/DeleteBtn';
-import DownloadBtn from '@/components/atoms/DownloadBtn';
-import PreviewBtn from '@/components/atoms/PreviewBtn';
-import { SearchBar } from '@/components/molecules/SearchBar';
-import { UploadFile } from '@/components/molecules/UploadFile';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { useUser } from '@clerk/clerk-react';
-import { useQuery } from 'convex/react';
-import { EllipsisVertical, File, Folder, ImageIcon, Star } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
-import { api } from '../../../convex/_generated/api';
+import DeleteBtn from '@/components/atoms/DeleteBtn'
+import DownloadBtn from '@/components/atoms/DownloadBtn'
+import PreviewBtn from '@/components/atoms/PreviewBtn'
+import { SearchBar } from '@/components/molecules/SearchBar'
+import { UploadFile } from '@/components/molecules/UploadFile'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { useUser } from '@clerk/nextjs'
+import { useQuery } from 'convex/react'
+import { EllipsisVertical, Folder, ImageIcon, Star } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
+import { api } from '../../../convex/_generated/api'
 
-const Page = () => {
+const FileBrowser = ({ title }) => {
+
     const { user } = useUser();
     const [query, setQuery] = useState("");
-    const files = useQuery(api.files.getFiles, { userId: user?.id , query });
+
+    const files = useQuery(api.files.getFiles, { userId: user?.id, query });
 
 
     const fileIcon = (file, className) => {
@@ -47,12 +49,11 @@ const Page = () => {
                         />
                     </div>
                     <div className="flex lg:order-1 col-span-3 py-2 flex-grow-0">
-                        <strong className='text-xl lg:text-2xl'>Dashboard</strong>
+                        <strong className='text-xl lg:text-2xl'>{title}</strong>
                     </div>
                     <div className="flex lg:order-3 col-span-2 justify-end py-2 flex-grow-0">
                         <UploadFile />
                     </div>
-
                 </div>
             </div>
             <div className="flex w-full flex-grow h-[500px] overflow-y-auto">
@@ -71,7 +72,7 @@ const Page = () => {
                             />
                         </div>
                     ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-fit gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-fit gap-4">
                             {files?.map(file => (
                                 <Card key={file._id} className="w-full h-fit relative flex flex-col">
                                     <CardHeader className="flex">
@@ -124,13 +125,13 @@ const Page = () => {
                                     </CardFooter>
                                 </Card>
                             ))}
-                            </div>
-                        )
+                        </div>
+                    )
 
                 }
             </div>
         </div>
     );
-};
+}
 
-export default Page;
+export default FileBrowser
