@@ -28,7 +28,8 @@ export const getFiles = query({
     args: {
         userId: v.string(),
         query: v.optional(v.string()),
-        favorites: v.optional(v.boolean())
+        favorites: v.optional(v.boolean()),
+        deletedOnly: v.optional(v.boolean()),
     },
     handler: async (ctx, args) => {
         let files = await ctx.db.query("files")
@@ -139,4 +140,11 @@ export const toggleFavorite = mutation({
     }
 });
 
-
+export const getTrashFile = query({
+    args: {
+        storageId: v.id("_storage"),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db.system.get(args.storageId);
+    },
+});

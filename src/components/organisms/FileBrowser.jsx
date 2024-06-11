@@ -16,12 +16,12 @@ import { useState } from 'react'
 import { api } from '../../../convex/_generated/api'
 import FavoriteBtn from '../atoms/FavoriteBtn'
 
-const FileBrowser = ({ title, favorites }) => {
+const FileBrowser = ({ title, favorites, deletedOnly }) => {
 
     const { user } = useUser();
     const [query, setQuery] = useState("");
 
-    const files = useQuery(api.files.getFiles, { userId: user?.id, query, favorites });
+    const files = useQuery(api.files.getFiles, { userId: user?.id, query, favorites, deletedOnly });
 
 
     const fileIcon = (file, className) => {
