@@ -11,7 +11,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
-import { EllipsisVertical, File, Folder, Image, ImageIcon } from 'lucide-react';
+import { EllipsisVertical, File, Folder, ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { api } from '../../../convex/_generated/api';
@@ -97,7 +98,7 @@ const FileBrowser = ({ title, favorites, trashes }) => {
                                                                 <DownloadBtn fileId={file._id} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
-                                                                <FavoriteBtn fileId={file.fileId} userId={file.userId} />
+                                                                <FavoriteBtn fileId={file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
                                                                 <DeleteBtn fileId={pathname === "/dashboard/trash" ? file.dbId : file._id} userId={file.userId} />
