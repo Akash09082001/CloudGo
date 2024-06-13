@@ -28,7 +28,8 @@ export const getFiles = query({
     args: {
         userId: v.string(),
         query: v.optional(v.string()),
-        favorites: v.optional(v.boolean())
+        favorites: v.optional(v.boolean()),
+        trashes: v.optional(v.boolean()),
     },
     handler: async (ctx, args) => {
         let files = await ctx.db.query("files")
@@ -47,9 +48,21 @@ export const getFiles = query({
                 .filter((q) => q.eq(q.field("userId"), args.userId))
                 .collect()
 
-            console.log("favorite list", favorites);
-
             return files.filter((file) => favorites.some((favorite) => favorite.fileId === file.fileId))
+        }
+
+        console.log("all files", files);
+
+        if (args.trashes) {
+            const trashes = await ctx.db
+                .query("trash")
+                .filter((q) => q.eq(q.field("userId"), args.userId))
+                .collect()
+
+            console.log("trash list", trashes);
+
+            return trashes
+
         }
 
         return Promise.all(
@@ -138,5 +151,69 @@ export const toggleFavorite = mutation({
         }
     }
 });
+
+export const addToTrash = mutation({
+    args: {
+        userId: v.string(),
+        fileId: v.id("files"),
+    },
+    handler: async (ctx, args) => {
+        const file = await ctx.db.get(args.fileId)
+
+        console.log("parmams", args.fileId);
+
+        console.log(file);
+
+        if (!file) {
+
+            const trashFiles = await ctx.db
+                .query("trash")
+                .collect()
+
+            console.log("trashFiles", trashFiles);
+
+            const getTrashFile = await ctx.db
+                .query("trash")
+                .filter((q) => q.eq(q.field("dbId"), trashFiles[0].dbId))
+                .collect()
+
+            console.log("getTrashFile", getTrashFile);
+
+            await ctx.db.insert("files", {
+                fileId: getTrashFile[0].fileId,
+                userId: getTrashFile[0].userId,
+                title: getTrashFile[0].title,
+                type: getTrashFile[0].type,
+            });
+
+            await ctx.db.delete(trashFiles[0]._id)
+
+            return {
+                success: true,
+                message: "File is moved to Files",
+                isTrash: true
+            };
+
+        }
+        else {
+
+            await ctx.db.delete(file._id)
+
+            await ctx.db.insert("trash", {
+                dbId: file._id,
+                fileId: file.fileId,
+                userId: file.userId,
+                title: file.title,
+                type: file.type,
+            })
+
+            return {
+                success: true,
+                message: "File is moved to trash",
+                isTrash: true
+            }
+        }
+    }
+})
 
 
