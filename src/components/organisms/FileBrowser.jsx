@@ -12,16 +12,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
 import { EllipsisVertical, File, Folder, Image, ImageIcon } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { api } from '../../../convex/_generated/api';
 import LoadingSkeleton from '../atoms/LoadingSkeleton';
 
-const FileBrowser = ({ title, favorites }) => {
+const FileBrowser = ({ title, favorites, trashes }) => {
     const { user } = useUser();
+    const pathname = usePathname();
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const files = useQuery(api.files.getFiles, { userId: user?.id, query, favorites });
+    const files = useQuery(api.files.getFiles, { userId: user?.id, query, favorites, trashes });
 
     useEffect(() => {
         setLoading(true);
@@ -95,10 +97,10 @@ const FileBrowser = ({ title, favorites }) => {
                                                                 <DownloadBtn fileId={file._id} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
-                                                                <FavoriteBtn fileId={file._id} userId={file.userId} />
+                                                                <FavoriteBtn fileId={file.fileId} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
-                                                                <DeleteBtn fileId={file._id} />
+                                                                <DeleteBtn fileId={pathname === "/dashboard/trash" ? file.dbId : file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
