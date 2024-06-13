@@ -29,6 +29,7 @@ export const getFiles = query({
         userId: v.string(),
         query: v.optional(v.string()),
         favorites: v.optional(v.boolean()),
+        // trashes: v.optional(v.boolean()),
     },
     handler: async (ctx, args) => {
         let files = await ctx.db.query("files")
@@ -49,6 +50,18 @@ export const getFiles = query({
 
             return files.filter((file) => favorites.some((favorite) => favorite.fileId === file.fileId))
         }
+
+        // if (args.trashes) {
+        //     const trashes = await ctx.db
+        //         .query("trash")
+        //         .filter((q) => q.eq(q.field("userId"), args.userId))
+        //         .collect()
+
+        //     console.log("trash list", trashes);
+
+        //     return trashes
+
+        // }
 
         return Promise.all(
             files.map(async (file) => {
@@ -102,6 +115,8 @@ export const toggleFavorite = mutation({
     },
     handler: async (ctx, args) => {
         const file = await ctx.db.get(args.fileId)
+
+        console.log(file);
 
         if (!file) console.log("file not found");
 
