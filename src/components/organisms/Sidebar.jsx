@@ -1,7 +1,7 @@
 "use client"
 
 import useMediaQuery from '@/hooks/useMediaQuery'
-import { Folder, Star, Trash } from 'lucide-react'
+import { Folder, Star } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
@@ -22,12 +22,12 @@ const Sidebar = () => {
             link: "/dashboard/favorites",
             name: "Favorites"
         },
-        {
-            id: "3",
-            icon: <Trash className='size-5' />,
-            link: "/dashboard/trash",
-            name: "Trash"
-        }
+        // {
+        //     id: "3",
+        //     icon: <Trash className='size-5' />,
+        //     link: "/dashboard/trash",
+        //     name: "Trash"
+        // }
     ]
 
     const isDesktop = useMediaQuery("(min-width: 768px)");
