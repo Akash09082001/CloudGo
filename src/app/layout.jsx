@@ -1,8 +1,8 @@
+import Navbar from "@/components/organisms/Navbar";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
-import { cn } from "@/lib/utils";
-import Navbar from "@/components/organisms/Navbar";
 import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -35,8 +35,8 @@ export default function RootLayout({ children }) {
                 >
                     <Providers>
                         <Navbar />
-                        <main className="relative mx-auto flex h-navScreen w-full flex-grow overflow-hidden">
-                            <div className="flex h-full w-full backdrop-blur-[2px]">
+                        <main className="relative mx-auto flex h-navScreen w-full flex-grow overflow-hidden magicpattern">
+                            <div className="flex h-full w-full backdrop-blur-sm">
                                 {children}
                             </div>
                         </main>

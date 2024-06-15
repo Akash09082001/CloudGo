@@ -1,14 +1,5 @@
 "use client"
 
-import DeleteBtn from '@/components/atoms/DeleteBtn';
-import DownloadBtn from '@/components/atoms/DownloadBtn';
-import FavoriteBtn from '@/components/atoms/FavoriteBtn';
-import PreviewBtn from '@/components/atoms/PreviewBtn';
-import { SearchBar } from '@/components/molecules/SearchBar';
-import { UploadFile } from '@/components/molecules/UploadFile';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
 import { EllipsisVertical, File, Folder, ImageIcon } from 'lucide-react';
@@ -16,7 +7,16 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { api } from '../../../convex/_generated/api';
+import DeleteBtn from '../atoms/DeleteBtn';
+import DownloadBtn from '../atoms/DownloadBtn';
+import FavoriteBtn from '../atoms/FavoriteBtn';
 import LoadingSkeleton from '../atoms/LoadingSkeleton';
+import PreviewBtn from '../atoms/PreviewBtn';
+import { SearchBar } from '../molecules/SearchBar';
+import UploadFile from '../molecules/UploadFile';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const FileBrowser = ({ title, favorites, trashes }) => {
     const { user } = useUser();
@@ -44,29 +44,29 @@ const FileBrowser = ({ title, favorites, trashes }) => {
     };
 
     return (
-        <div className="order-1 md:order-2 gap-2 flex h-full flex-col w-full flex-grow-0 md:col-span-5 lg:col-span-6">
+        <div className="order-1 md:order-2 gap-2 flex h-full flex-col w-full flex-grow-0 md:col-span-5 lg:col-span-6 overflow-hidden">
             <div className="flex w-full flex-grow-0">
-                <div className="grid grid-cols-5 lg:flex w-full gap-1 md:gap-3 lg:gap-5 items-center justify-between">
-                    <div className="flex lg:order-2 col-span-5 py-2 flex-grow">
+                <div className="grid grid-cols-6 md:grid-cols-5 lg:flex w-full gap-1 md:gap-3 lg:gap-5 items-center justify-between">
+                    <div className="flex order-2 col-span-4 sm:col-span-5 md:col-span-3 py-2 flex-grow">
                         <SearchBar
                             query={query}
                             setQuery={setQuery}
                             inputType="text"
-                            inputPlaceholder="Search your file and folder"
+                            inputPlaceholder="Search your file"
                             btnText="Search"
                         />
                     </div>
-                    <div className="flex lg:order-1 col-span-3 py-2 flex-grow-0">
+                    <div className="flex order-1 col-span-2 sm:col-span-1 md:col-span-1 py-2 flex-grow-0">
                         <strong className="text-xl lg:text-2xl">{title}</strong>
                     </div>
-                    <div className="flex lg:order-3 col-span-2 justify-end py-2 flex-grow-0">
+                    <div className="hidden md:flex order-3 col-span-2 md:col-span-1 justify-end py-2 flex-grow-0">
                         <UploadFile />
                     </div>
                 </div>
             </div>
             <div className="flex w-full flex-grow h-[500px] overflow-y-auto">
                 {loading ? (
-                    <div className='flex w-full items-center justify-center'>
+                    <div className='flex w-full h-full'>
                         <LoadingSkeleton />
                     </div>
                 ) : files && !query && files.length === 0 ? (
@@ -127,4 +127,4 @@ const FileBrowser = ({ title, favorites, trashes }) => {
     );
 };
 
-export default FileBrowser;
+export default FileBrowser
