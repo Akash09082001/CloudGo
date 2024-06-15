@@ -101,7 +101,7 @@ const FileBrowser = ({ title, favorites, trashes }) => {
                                                                 <FavoriteBtn fileId={file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
-                                                                <DeleteBtn fileId={pathname === "/dashboard/trash" ? file.dbId : file._id} userId={file.userId} />
+                                                                <DeleteBtn fileId={file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
