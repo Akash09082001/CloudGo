@@ -1,5 +1,4 @@
-
-import FileBrowser from '@/components/organisms/FileBrowser'
+import FileBrowser from "@/components/organisms/FileBrowser"
 
 const page = () => {
 

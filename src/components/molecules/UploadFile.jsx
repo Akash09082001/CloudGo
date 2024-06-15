@@ -17,20 +17,23 @@ import { toast } from "sonner";
 import { api } from "../../../convex/_generated/api";
 import { InputWithLabel } from "./InputWithLabel";
 
-export function UploadFile() {
+const UploadFile = () => {
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [uploading, setUploading] = useState(false);
     const createFile = useMutation(api.files.createFile);
     const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+
     const { user } = useUser();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUploading(true)
         if (!file) {
             console.error("No file selected");
             toast.warning("No file selected")
+            setUploading(false)
             return;
         }
 
@@ -101,12 +104,15 @@ export function UploadFile() {
                             inputPlaceholder={"Choose a file"}
                             inputOnChange={(e) => setFile(e.target.files[0])}
                         />
+                        <DialogDescription>Max size Allowed only 5 MB</DialogDescription>
                     </div>
                     <DialogFooter>
-                        <Button className="w-full" type="submit" disabeled={uploading}>{uploading ? "Uploading.." : "Upload File"}</Button>
+                        <Button className="w-full" type="submit" disabled={uploading}>{uploading ? "Uploading.." : "Upload File"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>
     );
 }
+
+export default UploadFile
