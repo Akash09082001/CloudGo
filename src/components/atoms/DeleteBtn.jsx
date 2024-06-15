@@ -11,17 +11,19 @@ const DeleteBtn = ({ fileId, userId }) => {
 
     const pathname = usePathname();
 
+    console.log(fileId);
+
     const deleteFile = useMutation(api.files.deleteFileById);
     const trashFile = useMutation(api.files.addToTrash);
-
-    const handleDelete = async () => {
-        await deleteFile({ fileId })
-        toast.success("File is Deleted")
-    }
 
     const handleTrash = async () => {
         await trashFile({ fileId, userId })
         toast.success("File is Added to Trash")
+    }
+
+    const handleDelete = async () => {
+        await deleteFile({ fileId })
+        toast.success("File is Deleted")
     }
 
     return (
