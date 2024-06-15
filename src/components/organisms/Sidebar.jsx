@@ -1,6 +1,6 @@
 "use client"
 
-import { Folder, Star } from 'lucide-react'
+import { Folder, Star, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import UploadFile from '../molecules/UploadFile'
@@ -21,12 +21,12 @@ const Sidebar = () => {
             link: "/dashboard/favorites",
             name: "Favorites"
         },
-        // {
-        //     id: "3",
-        //     icon: <Trash className='size-5' />,
-        //     link: "/dashboard/trash",
-        //     name: "Trash"
-        // }
+        {
+            id: "3",
+            icon: <Trash className='size-5' />,
+            link: "/dashboard/trash",
+            name: "Trash"
+        }
     ]
 
     const getLinkClass = (navLink) => {
@@ -35,7 +35,7 @@ const Sidebar = () => {
 
     return (
         <>
-            <div className='hidden md:flex w-full'>
+            <div className='hidden md:flex w-full justify-between flex-col'>
                 <ul className='flex w-full flex-col gap-3'>
                     {navList.map((nav) => (
                         <li key={nav.id} className='flex w-full rounded-md'>

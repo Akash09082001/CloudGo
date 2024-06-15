@@ -7,8 +7,8 @@ export const createFile = mutation({
         title: v.string(),
         fileId: v.id("_storage"),
         userId: v.string(),
-        type: fileType
-
+        type: fileType,
+        status: v.boolean()
     },
     handler: async (ctx, args) => {
         await ctx.db.insert("files", {
@@ -16,6 +16,7 @@ export const createFile = mutation({
             fileId: args.fileId,
             userId: args.userId,
             type: args.type,
+            status: args.status,
         });
     }
 });
@@ -29,11 +30,11 @@ export const getFiles = query({
         userId: v.string(),
         query: v.optional(v.string()),
         favorites: v.optional(v.boolean()),
-        // trashes: v.optional(v.boolean()),
+        trashes: v.optional(v.boolean()),
     },
     handler: async (ctx, args) => {
         let files = await ctx.db.query("files")
-            .filter((q) => q.eq(q.field("userId"), args.userId))
+            .filter((q) => q.and(q.eq(q.field("userId"), args.userId), q.eq(q.field("status"), true)))
             .collect();
 
         if (args.query) {
@@ -51,17 +52,15 @@ export const getFiles = query({
             return files.filter((file) => favorites.some((favorite) => favorite.fileId === file.fileId))
         }
 
-        // if (args.trashes) {
-        //     const trashes = await ctx.db
-        //         .query("trash")
-        //         .filter((q) => q.eq(q.field("userId"), args.userId))
-        //         .collect()
+        if (args.trashes) {
+            const trashes = await ctx.db
+                .query("files")
+                .filter((q) => q.and(q.eq(q.field("userId"), args.userId), q.eq(q.field("status"), false)))
+                .collect()
 
-        //     console.log("trash list", trashes);
+            return trashes
 
-        //     return trashes
-
-        // }
+        }
 
         return Promise.all(
             files.map(async (file) => {
@@ -155,65 +154,98 @@ export const toggleFavorite = mutation({
 export const addToTrash = mutation({
     args: {
         userId: v.string(),
-        fileId: v.id("files"),
+        fileId: v.id("files")
     },
     handler: async (ctx, args) => {
         const file = await ctx.db.get(args.fileId)
 
-        console.log("parmams", args.fileId);
+        console.log("All files", file);
 
-        console.log(file);
+        if (!file) console.log("file not found");
 
-        if (!file) {
+        const isFileActive = file.status
 
-            const trashFiles = await ctx.db
-                .query("trash")
-                .collect()
-
-            console.log("trashFiles", trashFiles);
-
-            const getTrashFile = await ctx.db
-                .query("trash")
-                .filter((q) => q.eq(q.field("dbId"), trashFiles[0].dbId))
-                .collect()
-
-            console.log("getTrashFile", getTrashFile);
-
-            await ctx.db.insert("files", {
-                fileId: getTrashFile[0].fileId,
-                userId: getTrashFile[0].userId,
-                title: getTrashFile[0].title,
-                type: getTrashFile[0].type,
-            });
-
-            await ctx.db.delete(trashFiles[0]._id)
-
+        if (!isFileActive) {
+            await ctx.db.patch(file._id, { status: true })
             return {
                 success: true,
                 message: "File is moved to Files",
-                isTrash: true
-            };
-
-        }
-        else {
-
-            await ctx.db.delete(file._id)
-
-            await ctx.db.insert("trash", {
-                dbId: file._id,
-                fileId: file.fileId,
-                userId: file.userId,
-                title: file.title,
-                type: file.type,
-            })
-
-            return {
-                success: true,
-                message: "File is moved to trash",
-                isTrash: true
             }
         }
+
+        await ctx.db.patch(file._id, { status: false })
+
+        return {
+            success: true,
+            message: "File is moved to Trash",
+        }
+
+
     }
 })
+
+// export const addToTrash = mutation({
+//     args: {
+//         userId: v.string(),
+//         fileId: v.id("files"),
+//     },
+//     handler: async (ctx, args) => {
+//         const file = await ctx.db.get(args.fileId)
+
+//         console.log("parmams", args.fileId);
+
+//         console.log(file);
+
+//         if (!file) {
+
+//             const trashFiles = await ctx.db
+//                 .query("trash")
+//                 .collect()
+
+//             console.log("trashFiles", trashFiles);
+
+//             const getTrashFile = await ctx.db
+//                 .query("trash")
+//                 .filter((q) => q.eq(q.field("dbId"), trashFiles[0].dbId))
+//                 .collect()
+
+//             console.log("getTrashFile", getTrashFile);
+
+//             await ctx.db.insert("files", {
+//                 fileId: getTrashFile[0].fileId,
+//                 userId: getTrashFile[0].userId,
+//                 title: getTrashFile[0].title,
+//                 type: getTrashFile[0].type,
+//             });
+
+//             await ctx.db.delete(trashFiles[0]._id)
+
+//             return {
+//                 success: true,
+//                 message: "File is moved to Files",
+//                 isTrash: true
+//             };
+
+//         }
+//         else {
+
+//             await ctx.db.delete(file._id)
+
+//             await ctx.db.insert("trash", {
+//                 dbId: file._id,
+//                 fileId: file.fileId,
+//                 userId: file.userId,
+//                 title: file.title,
+//                 type: file.type,
+//             })
+
+//             return {
+//                 success: true,
+//                 message: "File is moved to trash",
+//                 isTrash: true
+//             }
+//         }
+//     }
+// })
 
 

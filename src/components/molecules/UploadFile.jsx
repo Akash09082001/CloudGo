@@ -65,7 +65,8 @@ const UploadFile = () => {
             title,
             fileId: storageId,
             userId: user.id,
-            type: types[file.type]
+            type: types[file.type],
+            status: true,
         });
         setTitle('');
         setFile(null);
