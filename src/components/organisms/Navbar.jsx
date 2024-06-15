@@ -1,9 +1,8 @@
-import React from 'react'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import Link from 'next/link'
 import Logo from '../atoms/Logo'
 import { ThemeSwitcherBtn } from '../atoms/ThemeSwitcherBtn'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '../ui/button'
-import Link from 'next/link'
 
 const Navbar = () => {
 
