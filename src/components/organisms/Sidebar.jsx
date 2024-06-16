@@ -54,7 +54,7 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className='flex md:hidden w-full items-center justify-center backdrop-blur-lg'>
-                <ul className='flex px-4 py-2 rounded-lg border justify-around w-full gap-4'>
+                <ul className='flex py-2 rounded-lg justify-between w-full gap-4'>
                     {navList.map((nav) => (
                         <li key={nav.id} className='flex w-fit rounded-md'>
                             <Button
