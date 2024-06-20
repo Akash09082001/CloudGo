@@ -10,6 +10,7 @@ const Logo = () => {
                     alt='Logo'
                     width={40}
                     height={40}
+                    className='bg-primary rounded-full'
                 />
                 <span>Go</span>
                 <span className='text-primary'>Cloud</span>

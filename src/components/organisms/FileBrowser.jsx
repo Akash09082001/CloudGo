@@ -12,6 +12,7 @@ import DownloadBtn from '../atoms/DownloadBtn';
 import FavoriteBtn from '../atoms/FavoriteBtn';
 import LoadingSkeleton from '../atoms/LoadingSkeleton';
 import PreviewBtn from '../atoms/PreviewBtn';
+import UndoBtn from '../atoms/UndoBtn';
 import { SearchBar } from '../molecules/SearchBar';
 import UploadFile from '../molecules/UploadFile';
 import { Button } from '../ui/button';
@@ -101,8 +102,15 @@ const FileBrowser = ({ title, favorites, trashes }) => {
                                                                 <FavoriteBtn fileId={file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex w-full justify-between">
-                                                                <DeleteBtn fileId={file._id} userId={file.userId} />
+                                                                <UndoBtn fileId={file._id} userId={file.userId} />
                                                             </DropdownMenuItem>
+                                                            {
+                                                                pathname === "/dashboard/trash" ? (
+                                                                    <DropdownMenuItem className="flex w-full justify-between">
+                                                                        <DeleteBtn fileId={file._id} userId={file.userId} />
+                                                                    </DropdownMenuItem>
+                                                                ) : ("")
+                                                            }
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
                                                 </div>
