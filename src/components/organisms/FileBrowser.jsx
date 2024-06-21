@@ -53,7 +53,7 @@ const FileBrowser = ({ title, favorites, trashes }) => {
                             query={query}
                             setQuery={setQuery}
                             inputType="text"
-                            inputPlaceholder="Search your file"
+                            inputPlaceholder="Search Your File"
                             btnText="Search"
                         />
                     </div>
@@ -65,7 +65,7 @@ const FileBrowser = ({ title, favorites, trashes }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex w-full flex-grow h-[500px] overflow-y-auto">
+            <div className="flex w-full flex-grow h-[500px] overflow-y-auto scrollbar pr-3">
                 {loading ? (
                     <div className='flex w-full h-full'>
                         <LoadingSkeleton />
