@@ -1,6 +1,7 @@
 "use client"
 
-import { Folder, Star, Trash } from 'lucide-react'
+import { SignOutButton, SignedIn } from '@clerk/nextjs'
+import { Folder, LogOut, Star, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import UploadFile from '../molecules/UploadFile'
@@ -30,7 +31,7 @@ const Sidebar = () => {
     ]
 
     const getLinkClass = (navLink) => {
-        return pathname === navLink ? 'bg-primary' : '';
+        return pathname === navLink ? 'bg-primary text-white' : '';
     };
 
     return (
@@ -42,7 +43,7 @@ const Sidebar = () => {
                             <Button
                                 asChild
                                 variant="ghost"
-                                className={`w-full items-start justify-start ${getLinkClass(nav.link)}`}
+                                className={`w-full items-center justify-start ${getLinkClass(nav.link)}`}
                             >
                                 <Link href={nav.link} className='gap-3'>
                                     <span>{nav.icon}</span>
@@ -52,6 +53,18 @@ const Sidebar = () => {
                         </li>
                     ))}
                 </ul>
+                <div className="flex w-full">
+                    <SignedIn>
+                        <SignOutButton>
+                            <div className="flex bg-primary gap-3 py-3 text-white px-4 rounded-md w-full items-center justify-start ">
+                                <span>
+                                    <LogOut className='size-5' />
+                                </span>
+                                <span className='text-sm'>LogOut</span>
+                            </div>
+                        </SignOutButton>
+                    </SignedIn>
+                </div>
             </div>
             <div className='flex md:hidden w-full items-center justify-center backdrop-blur-lg'>
                 <ul className='flex py-2 rounded-lg justify-between w-full gap-4'>
@@ -59,7 +72,6 @@ const Sidebar = () => {
                         <li key={nav.id} className='flex w-fit rounded-md'>
                             <Button
                                 asChild
-                                variant="ghost"
                                 className={`w-fit ${getLinkClass(nav.link)}`}
                             >
                                 <Link href={nav.link} className='flex w-fit items-center gap-3'>
