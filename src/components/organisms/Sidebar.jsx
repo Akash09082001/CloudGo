@@ -55,12 +55,12 @@ const Sidebar = () => {
                 </ul>
                 <div className="flex w-full">
                     <SignedIn>
-                        <SignOutButton>
-                            <div className="flex bg-primary gap-3 py-3 text-white px-4 rounded-md w-full items-center justify-start ">
+                        <SignOutButton redirectUrl="/" >
+                            <div className="flex cursor-pointer bg-primary gap-3 py-3 text-white px-4 rounded-md w-full items-center justify-start ">
                                 <span>
                                     <LogOut className='size-5' />
                                 </span>
-                                <span className='text-sm'>LogOut</span>
+                                <span className='text-sm'>Log Out</span>
                             </div>
                         </SignOutButton>
                     </SignedIn>
@@ -72,6 +72,7 @@ const Sidebar = () => {
                         <li key={nav.id} className='flex w-fit rounded-md'>
                             <Button
                                 asChild
+                                variant="ghost"
                                 className={`w-fit ${getLinkClass(nav.link)}`}
                             >
                                 <Link href={nav.link} className='flex w-fit items-center gap-3'>
