@@ -3,13 +3,13 @@ import { Skeleton } from "../ui/skeleton";
 
 const LoadingSkeleton = () => {
 
-    const cards = Array.from({ length: 4 }, (_, i) => i + 1);
+    const cards = Array.from({ length: 1 }, (_, i) => i + 1);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full h-fit">
+        <div className="flex gap-5 w-full h-full items-center justify-center">
             {
                 cards.map((card) => (
-                    <Card key={card} className="w-full h-fit">
+                    <Card key={card} className="w-full h-fit max-w-xs">
                         <CardHeader>
                             <Skeleton className="h-[125px] w-full rounded-xl" />
                         </CardHeader>

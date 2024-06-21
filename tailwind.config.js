@@ -77,5 +77,57 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          ".scrollbar-hide": {
+            /* IE and Edge */
+            "-ms-overflow-style": "none",
+            /* Firefox */
+            "scrollbar-width": "none",
+            /* Safari and Chrome */
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+          ".scrollbar": {
+            /* IE and Edge */
+            "-ms-overflow-style": "auto",
+            /* Firefox */
+            "scrollbar-width": "auto",
+            /* Safari and Chrome */
+            "&::-webkit-scrollbar": {
+              display: "block",
+              width: "8px",
+              height: "8px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+            },
+
+            "&::-webkit-scrollbar-thumb": {
+              background: "#6d27d9",
+              borderRadius: "35px",
+            },
+
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#6d27d9",
+            },
+
+            "&::-webkit-scrollbar-corner": {
+              background: "transparent",
+            },
+          },
+          ".scrollbar:hover": {
+            "&::-webkit-scrollbar-thumb": {
+              background: "#6d27d9",
+            },
+          },
+        },
+        ["responsive"]
+      )
+    },
+  ],
 }
