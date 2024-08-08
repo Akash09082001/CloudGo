@@ -1,9 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+
+    const user = useAuth()
+
+    useEffect(() => {
+        if (!user) redirect("/")
+        redirect("/dashboard/files")
+    }, [])
 
     return (
         <div className="flex w-full">

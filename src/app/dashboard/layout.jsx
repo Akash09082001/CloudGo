@@ -1,3 +1,5 @@
+
+
 import Sidebar from "@/components/organisms/Sidebar"
 
 const layout = ({ children }) => {
