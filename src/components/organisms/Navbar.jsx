@@ -1,8 +1,6 @@
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import Link from 'next/link'
+import { SignedIn, UserButton } from '@clerk/nextjs'
 import Logo from '../atoms/Logo'
 import { ThemeSwitcherBtn } from '../atoms/ThemeSwitcherBtn'
-import { Button } from '../ui/button'
 
 const Navbar = () => {
 
@@ -16,11 +14,11 @@ const Navbar = () => {
                     <SignedIn>
                         <UserButton />
                     </SignedIn>
-                    <SignedOut>
+                    {/* <SignedOut>
                         <Button>
                             <Link href={"/sign-in"}>Sign In</Link>
                         </Button>
-                    </SignedOut>
+                    </SignedOut> */}
                     <ThemeSwitcherBtn />
                 </div>
             </div>
